@@ -18,11 +18,6 @@
 }
 
 - (void)close;
-- (int8_t)getByte;
-- (float)getFloat;
-- (int32_t)getLong;
-- (int16_t)getShort;
-- (NSString *)getString;
 - (NSData *)recv:(NSUInteger)length;
 - (BOOL)select;
 - (BOOL)select:(NSUInteger)timeout;

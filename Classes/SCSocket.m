@@ -19,51 +19,6 @@
     close(fdsocket);
 }
 
-- (int8_t)getByte
-{
-    char buffer;
-    recv(fdsocket, &buffer, 1, 0);
-
-    return buffer;
-}
-
-- (float)getFloat
-{
-    char buffer[4];
-    recv(fdsocket, buffer, 4, 0);
-
-    return *((float *)buffer);
-}
-
-- (int32_t)getLong
-{
-    char buffer[4];
-    recv(fdsocket, buffer, 4, 0);
-
-    return *((int32_t*)buffer);
-}
-
-- (int16_t)getShort
-{
-    char buffer[2];
-    recv(fdsocket, buffer, 2, 0);
-
-    return *((int16_t *)buffer);
-}
-
-- (NSString *)getString
-{
-    char ch;
-    NSMutableString* buffer = [[NSMutableString alloc] init];
-
-    do {
-        read(fdsocket, &ch, 1);
-        [buffer appendFormat:@"%c", ch];
-    } while(ch != '\0');
-
-    return buffer;
-}
-
 - (NSData *)recv:(NSUInteger)length
 {
     char data[length];
