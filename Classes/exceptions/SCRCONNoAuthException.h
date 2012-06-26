@@ -7,9 +7,6 @@
 
 #import "SCException.h"
 
-
-@interface SCRCONNoAuthException : SCException {
-
-}
+@interface SCRCONNoAuthException : SCException
 
 @end

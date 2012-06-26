@@ -14,63 +14,70 @@
 #import "SCSourceServer.h"
 #import "SCTimeoutException.h"
 
-
 @implementation SCSourceServer
 
--(id) initWithHost:(NSHost*) host {
-    return [self initWithHost:host andPort:27015];
-}
+- (id)initWithHost:(NSHost *)host
+{
+    self = [self initWithHost:host andPort:27015];
 
--(id) initWithHost:(NSHost*) host andPort:(int) portNumber {
-    self = [super initWithHost:host andPort:portNumber];
-    rconSocket = [[SCRCONSocket alloc] initWithHost:host andPort:portNumber];
-    //socket = [[SourceSocket alloc] init:ipAddress:portNumber];
-    
     return self;
 }
 
--(bool) rconAuth:(NSString*) password {
-    long seed;
+- (id)initWithHost:(NSHost *)host andPort:(uint16_t)portNumber
+{
+    self = [super initWithHost:host andPort:portNumber];
+
+    rconSocket = [[SCRCONSocket alloc] initWithHost:host andPort:portNumber];
+    //socket = [[SourceSocket alloc] init:ipAddress:portNumber];
+
+    return self;
+}
+
+- (BOOL)rconAuth:(NSString *)password
+{
+    time_t seed;
     time(&seed);
     srandom(seed);
     rconRequestId = random();
-    
+
     [rconSocket send:[[SCRCONAuthRequest alloc] initWithRequestId:rconRequestId withPassword:[password dataUsingEncoding:NSASCIIStringEncoding]]];
     [rconSocket getReply];
-    SCRCONPacket* reply = [rconSocket getReply];
-    
-    unsigned long mirroredRequestId = [reply getRequestId];
-    
+    SCRCONPacket *reply = [rconSocket getReply];
+
+    uint32_t mirroredRequestId = [reply getRequestId];
+
     return (mirroredRequestId == rconRequestId);
 }
 
--(NSString*) rconExec:(NSString*) command {
-    [rconSocket send: [[SCRCONExecRequest alloc] initWithRequestId:rconRequestId andCommand:[command dataUsingEncoding:NSASCIIStringEncoding]]];
-    NSMutableArray* responsePackets = [[NSMutableArray alloc] init];
-    
+- (NSString *)rconExec:(NSString*) command
+{
+    [rconSocket send:[[SCRCONExecRequest alloc] initWithRequestId:rconRequestId andCommand:[command dataUsingEncoding:NSASCIIStringEncoding]]];
+    NSMutableArray *responsePackets = [[NSMutableArray alloc] init];
+
     @try {
-        while(true) {
-            SCRCONPacket* responsePacket = [rconSocket getReply];
-            if([responsePacket isKindOfClass: [SCRCONAuthResponse class]]) {
+        while (YES) {
+            SCRCONPacket *responsePacket = [rconSocket getReply];
+            if ([responsePacket isKindOfClass:[SCRCONAuthResponse class]]) {
                 @throw [[SCRCONNoAuthException alloc] init];
             }
             [responsePackets addObject:responsePacket];
         }
     }
-    @catch(SCTimeoutException* e) {
-        if([responsePackets count] == 0) {
+    @catch (SCTimeoutException *e) {
+        if ([responsePackets count] == 0) {
             @throw;
         }
     }
-    
-    SCRCONPacket* packet;
-    NSMutableData* response = [NSMutableData data];
-    NSEnumerator* packetEnumerator = [responsePackets objectEnumerator];
-    while(packet = [packetEnumerator nextObject]) {
-        [response appendData:[(SCRCONExecResponse*) packet getResponse]];
+
+    SCRCONPacket *packet;
+    NSMutableData *response = [NSMutableData data];
+    NSEnumerator *packetEnumerator = [responsePackets objectEnumerator];
+    while (packet = [packetEnumerator nextObject]) {
+        [response appendData:[(SCRCONExecResponse *)packet getResponse]];
     }
-    
-    return [[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding];
+
+    return [[NSString alloc] initWithData:response
+                                 encoding:NSASCIIStringEncoding];
 }
 
 @end

@@ -7,11 +7,6 @@
 
 #import "SCException.h"
 
-
-@interface SCBufferUnderflowException : SCException {
-
-}
-
--(id) init;
+@interface SCBufferUnderflowException : SCException
 
 @end

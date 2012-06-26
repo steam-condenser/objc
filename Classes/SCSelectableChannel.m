@@ -7,10 +7,10 @@
 
 #import "SCSelectableChannel.h"
 
-
 @implementation SCSelectableChannel
 
--(SCSocket*) socket {
+- (SCSocket *)socket
+{
     return socket;
 }
 

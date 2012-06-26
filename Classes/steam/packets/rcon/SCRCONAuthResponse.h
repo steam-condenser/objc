@@ -7,11 +7,8 @@
 
 #import "SCRCONPacket.h"
 
+@interface SCRCONAuthResponse : SCRCONPacket
 
-@interface SCRCONAuthResponse : SCRCONPacket {
-
-}
-
--(id) initWithRequestId:(long) requestId;
+- (id)initWithRequestId:(uint32_t)requestId;
 
 @end

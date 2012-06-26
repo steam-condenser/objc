@@ -7,11 +7,13 @@
 
 #import "SCException.h"
 
-
 @implementation SCException
 
--(id) initWithMessage: (NSString*) message {
-    return [super initWithName: [self className] reason: message userInfo: nil];
+- (id)initWithMessage:(NSString *)message
+{
+    self = [super initWithName:[self className] reason:message userInfo:nil];
+
+    return self;
 }
 
 @end

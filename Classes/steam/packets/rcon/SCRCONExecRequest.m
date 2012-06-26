@@ -7,11 +7,15 @@
 
 #import "SCRCONExecRequest.h"
 
-
 @implementation SCRCONExecRequest
 
--(id) initWithRequestId:(long) requestId andCommand:(NSData*) rconCommand {
-    self = [super initWithRequestId:requestId andHeader:SERVERDATA_EXECCOMMAND andData:rconCommand];
+- (id)initWithRequestId:(uint32_t)requestId
+             andCommand:(NSData *)rconCommand
+{
+    self = [super initWithRequestId:requestId
+                          andHeader:SERVERDATA_EXECCOMMAND
+                            andData:rconCommand];
+
     return self;
 }
 

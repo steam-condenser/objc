@@ -7,11 +7,12 @@
 
 #import "SCRCONNoAuthException.h"
 
-
 @implementation SCRCONNoAuthException
 
--(id) init {
+- (id)init
+{
     self = [super initWithMessage:@"Not authenticated yet."];
+
     return self;
 }
 

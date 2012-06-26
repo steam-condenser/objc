@@ -10,45 +10,52 @@
 #import "SCException.h"
 #import "SCSocketChannel.h"
 
-
 @implementation SCSocketChannel
 
-+(SCSocketChannel*) open {
++ (SCSocketChannel *)open
+{
     return [[self alloc] init];
 }
 
--(id) init {
+- (id)init
+{
     socket = [[SCTCPSocket alloc] init];
-    [socket setBlock:true];
-    connected = false;
+    [socket setBlock:YES];
+    connected = NO;
     
     return self;
 }
 
--(void) close {
-    [(SCTCPSocket*) socket close];
+- (void)close
+{
+    [(SCTCPSocket *)socket close];
 }
     
--(SCSocketChannel*) connectWithHost:(NSHost*) remoteHost andPort:(int) remotePort {
+- (SCSocketChannel *)connectWithHost:(NSHost *)remoteHost
+                             andPort:(uint16_t)remotePort
+{
     [(SCTCPSocket*) socket connectWithHost:remoteHost andPort:remotePort];
-    connected = true;
+    connected = YES;
 
     return self;
 }
 
--(bool) isConnected {
+- (BOOL)isConnected
+{
     return connected;
 }
 
--(int) read:(SCByteBuffer*) destinationBuffer {
-    int length = [destinationBuffer getLength];
-    NSData* data = [socket recv:length];
+- (NSUInteger)read:(SCByteBuffer *)destinationBuffer
+{
+    NSUInteger length = [destinationBuffer getLength];
+    NSData *data = [socket recv:length];
     [destinationBuffer put:data];
     
     return [data length];
 }
 
--(int) write:(SCByteBuffer*) sourceBuffer {
+- (NSUInteger)write:(SCByteBuffer *)sourceBuffer
+{
     return [socket send:[sourceBuffer get]];
 }
 

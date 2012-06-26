@@ -7,10 +7,12 @@
 
 #import "SCGameServer.h"
 
-
 @implementation SCGameServer
 
--(id) initWithHost:(NSHost*) host andPort:(int) portNumber {
+- (id)initWithHost:(NSHost *)host andPort:(uint16_t)portNumber
+{
+    self = [super init];
+
     serverHost = host;
     serverPort = portNumber;
     

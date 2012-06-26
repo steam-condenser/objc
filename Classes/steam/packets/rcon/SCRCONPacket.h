@@ -12,15 +12,16 @@
 #define SERVERDATA_EXECCOMMAND 2
 #define SERVERDATA_RESPONSE_VALUE 0
 
-
 @interface SCRCONPacket : SCSteamPacket {
 @private
     unsigned long header;
     unsigned long requestId;
 }
 
--(id) initWithRequestId:(unsigned long) requestId andHeader:(unsigned long) rconHeader andData:(NSData*) rconData;
--(NSData*) getData;
--(unsigned long) getRequestId;
+- (id)initWithRequestId:(uint32_t)requestId
+              andHeader:(uint32_t)rconHeader
+                andData:(NSData *)rconData;
+- (NSData*)getData;
+- (unsigned long)getRequestId;
 
 @end

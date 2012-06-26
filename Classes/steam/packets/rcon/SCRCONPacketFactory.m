@@ -12,20 +12,20 @@
 #import "SCRCONPacket.h"
 #import "SCRCONPacketFactory.h"
 
-
 @implementation SCRCONPacketFactory
 
-+(SCRCONPacket*) getPacketFromData:(NSMutableData*) packetData {
++ (SCRCONPacket*)getPacketFromData:(NSMutableData *)packetData
+{
     SCRCONPacket* packet;
     SCByteBuffer* byteBuffer = [SCByteBuffer wrap:packetData];
     
     // ignore packet size
     [byteBuffer getLong];
-    long requestId = [byteBuffer getLong];
-    long header = [byteBuffer getLong];
+    uint32_t requestId = [byteBuffer getLong];
+    uint32_t header = [byteBuffer getLong];
     NSData* data = [[byteBuffer getString] dataUsingEncoding:NSASCIIStringEncoding];
     
-    switch(header) {
+    switch (header) {
         case SERVERDATA_AUTH_RESPONSE:
             packet = [[SCRCONAuthResponse alloc] initWithRequestId:requestId];
             break;

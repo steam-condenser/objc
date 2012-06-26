@@ -7,15 +7,20 @@
 
 #import "SCRCONExecResponse.h"
 
-
 @implementation SCRCONExecResponse
 
--(id) initWithRequestId:(long) requestId andCommandReturn:(NSData*) commandReturn {
-    self = [super initWithRequestId:requestId andHeader:SERVERDATA_RESPONSE_VALUE andData:commandReturn];
+- (id)initWithRequestId:(uint32_t)requestId
+       andCommandReturn:(NSData *)commandReturn
+{
+    self = [super initWithRequestId:requestId
+                          andHeader:SERVERDATA_RESPONSE_VALUE
+                            andData:commandReturn];
+
     return self;
 }
 
--(NSData*) getResponse {
+- (NSData *)getResponse
+{
     return [contentData array];
 }
 

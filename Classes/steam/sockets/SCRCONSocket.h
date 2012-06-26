@@ -11,12 +11,10 @@
 
 #define RCON_PACKET_MAX_SIZE 1440
 
-@interface SCRCONSocket : SCSteamSocket {
+@interface SCRCONSocket : SCSteamSocket
 
-}
-
--(SCRCONPacket*) getReply;
--(int) receivePacket:(int) bufferLength;
--(void) send:(SCRCONPacket*) packet;
+- (SCRCONPacket *)getReply;
+- (NSUInteger)receivePacket:(NSUInteger)bufferLength;
+- (void)send:(SCRCONPacket *)packet;
 
 @end

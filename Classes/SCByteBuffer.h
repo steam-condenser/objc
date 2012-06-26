@@ -7,36 +7,35 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface SCByteBuffer : NSObject {
 @private
-    NSMutableData* byteArray;
-    int capacity;
-    int limit;
-    int mark;
-    int position;
+    NSMutableData *byteArray;
+    NSUInteger     capacity;
+    NSUInteger     limit;
+    NSInteger      mark;
+    NSUInteger     position;
 }
 
-+(SCByteBuffer*) allocate: (int) length;
-+(SCByteBuffer*) wrap:(NSData*) byteArray;
++ (SCByteBuffer *)allocate:(NSUInteger)length;
++ (SCByteBuffer *)wrap:(NSData*)byteArray;
 
--(id) initWithByteArray:(NSData*) byteArray;
--(NSMutableData*) array;
--(SCByteBuffer*) clear;
--(SCByteBuffer*) flip;
--(NSData*) get;
--(NSData*) get:(int) length;
--(char) getByte;
--(float) getFloat;
--(long) getLong;
--(short) getShort;
--(NSString*) getString;
--(int) getLength;
--(int) limit;
--(int) position;
--(int) remaining;
--(SCByteBuffer*) rewind;
--(void) setLimit:(int) newLimit;
--(SCByteBuffer*) put:(NSData*) sourceByteArray;
+- (id)initWithByteArray:(NSData *)byteArray;
+- (NSMutableData *)array;
+- (SCByteBuffer *)clear;
+- (SCByteBuffer *)flip;
+- (NSData*)get;
+- (NSData*)get:(NSUInteger)length;
+- (int8_t)getByte;
+- (float)getFloat;
+- (int32_t)getLong;
+- (int16_t)getShort;
+- (NSString *)getString;
+- (NSUInteger)getLength;
+- (NSUInteger)limit;
+- (NSUInteger)position;
+- (NSUInteger)remaining;
+- (SCByteBuffer *)rewind;
+- (void)setLimit:(NSUInteger)newLimit;
+- (SCByteBuffer *)put:(NSData *)sourceByteArray;
 
 @end

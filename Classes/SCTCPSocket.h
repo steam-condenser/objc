@@ -7,10 +7,9 @@
 
 #import "SCSocket.h"
 
-@interface SCTCPSocket : SCSocket {
+@interface SCTCPSocket : SCSocket
 
-}
-
--(void) connectWithHost:(NSHost*) remoteHost andPort:(unsigned short) remotePort;
+- (void)connectWithHost:(NSHost *)remoteHost
+                andPort:(uint16_t)remotePort;
 
 @end

@@ -7,9 +7,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
-@interface SCSteamPacketFactory : NSObject {
-
-}
+@interface SCSteamPacketFactory : NSObject
 
 @end

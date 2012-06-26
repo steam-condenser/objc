@@ -10,9 +10,13 @@
 
 @implementation SCRCONAuthRequest
 
--(id) initWithRequestId:(long) aRequestId withPassword:(NSData*) aPassword
+-(id) initWithRequestId:(uint32_t)aRequestId
+           withPassword:(NSData *)aPassword
 {
-    self = [super initWithRequestId:aRequestId andHeader:SERVERDATA_AUTH andData:aPassword];
+    self = [super initWithRequestId:aRequestId
+                          andHeader:SERVERDATA_AUTH
+                            andData:aPassword];
+
     return self;
 }
 

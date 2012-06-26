@@ -7,11 +7,8 @@
 
 #import "SCRCONPacket.h"
 
+@interface SCRCONAuthRequest : SCRCONPacket
 
-@interface SCRCONAuthRequest : SCRCONPacket {
-
-}
-
--(id) initWithRequestId:(long) request withPassword:(NSData*) password;
+- (id)initWithRequestId:(uint32_t)request withPassword:(NSData *)password;
 
 @end

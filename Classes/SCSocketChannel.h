@@ -11,15 +11,16 @@
 
 @interface SCSocketChannel : SCSelectableChannel {
 @private
-    bool connected;
+    BOOL connected;
 }
 
-+(SCSocketChannel*) open;
--(id) init;
--(void) close;
--(SCSocketChannel*) connectWithHost:(NSHost*) remoteHost andPort:(int) remotePort;
--(bool) isConnected;
--(int) read: (SCByteBuffer*) destinationBuffer;
--(int) write: (SCByteBuffer*) sourceBuffer;
++ (SCSocketChannel *)open;
+- (id)init;
+- (void)close;
+- (SCSocketChannel *)connectWithHost:(NSHost *)remoteHost
+                             andPort:(uint16_t)remotePort;
+- (BOOL)isConnected;
+- (NSUInteger)read:(SCByteBuffer *)destinationBuffer;
+- (NSUInteger)write:(SCByteBuffer *)sourceBuffer;
 
 @end

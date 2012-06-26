@@ -7,14 +7,13 @@
 
 #import "SCByteBuffer.h"
 
-
 @interface SCSteamPacket : NSObject {
     SCByteBuffer* contentData;
     uint8_t headerData;
 }
 
--(id) initWithData:(NSData*) packetData;
--(id) initWithHeader:(uint8_t) packetHeader andData:(NSData*) packetData;
--(NSData*) getData;
+- (id)initWithData:(NSData *)packetData;
+- (id)initWithHeader:(uint8_t)packetHeader andData:(NSData *)packetData;
+- (NSData *)getData;
 
 @end

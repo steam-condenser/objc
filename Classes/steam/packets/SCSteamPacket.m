@@ -27,24 +27,32 @@
 
 @implementation SCSteamPacket
 
--(id) initWithData:(NSData*) packetData {
-    return [self initWithHeader:0x00 andData:packetData];
-}
+- (id)initWithData:(NSData *)packetData
+{
+    self = [self initWithHeader:0x00 andData:packetData];
 
--(id) initWithHeader:(uint8_t) packetHeader andData:(NSData*) packetData {
-    contentData = [SCByteBuffer wrap:packetData];
-    headerData = packetHeader;
     return self;
 }
 
--(NSData*) getData {
-    signed long packetHeader = 0xFFFFFFFF;
+- (id)initWithHeader:(uint8_t)packetHeader andData:(NSData *)packetData
+{
+    self = [super init];
+
+    contentData = [SCByteBuffer wrap:packetData];
+    headerData = packetHeader;
+
+    return self;
+}
+
+- (NSData *)getData
+{
+    uint32_t packetHeader = 0xFFFFFFFF;
     NSMutableData* bytes = [[NSMutableData alloc] initWithLength:0];
-    
-    [bytes appendData: [NSData dataWithBytes:(uint8_t*) &packetHeader length:4]];
-    [bytes appendData: [NSData dataWithBytes:(uint8_t*) &headerData length:1]];
-    [bytes appendData: [contentData array]];
-    
+
+    [bytes appendData:[NSData dataWithBytes:(uint8_t *)&packetHeader length:4]];
+    [bytes appendData:[NSData dataWithBytes:(uint8_t *)&headerData length:1]];
+    [bytes appendData:[contentData array]];
+
     return bytes;
 }
 

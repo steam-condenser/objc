@@ -7,12 +7,10 @@
 
 #import "SCRCONPacket.h"
 
+@interface SCRCONExecResponse : SCRCONPacket
 
-@interface SCRCONExecResponse : SCRCONPacket {
-
-}
-
--(id) initWithRequestId:(long) requestId andCommandReturn:(NSData*) commandReturn;
--(NSData*) getResponse;
+- (id)initWithRequestId:(uint32_t)requestId
+       andCommandReturn:(NSData *)commandReturn;
+- (NSData *)getResponse;
 
 @end

@@ -8,11 +8,8 @@
 #import "SCRCONPacket.h"
 #import "SCSteamPacketFactory.h"
 
+@interface SCRCONPacketFactory : SCSteamPacketFactory
 
-@interface SCRCONPacketFactory : SCSteamPacketFactory {
-
-}
-
-+(SCRCONPacket*) getPacketFromData:(NSMutableData*) packetData;
++ (SCRCONPacket *)getPacketFromData:(NSMutableData*)packetData;
 
 @end

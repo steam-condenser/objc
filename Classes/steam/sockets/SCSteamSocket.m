@@ -10,25 +10,29 @@
 #import "SCSteamSocket.h"
 #import "SCTimeoutException.h"
 
-
 @implementation SCSteamSocket
 
--(id) initWithHost:(NSHost*) host andPort:(int) portNumber {
+- (id)initWithHost:(NSHost *)host andPort:(uint16_t)portNumber
+{
+    self = [super init];
+
     //buffer = [ByteBuffer allocate:1400];
     remoteHost = host;
     remotePort = portNumber;
+
     return self;
 }
 
--(SCSteamPacket*) getReply {
+- (SCSteamPacket *)getReply
+{
     [self doesNotRecognizeSelector:_cmd];
-    
+
     return nil;
 }
 
 /*-(void)receivePacket:(int) bufferLength {
     if(bufferLength == 0) {
-        if(true) {
+        if(YES) {
             return 0;
         }
         [buffer clear];
@@ -47,7 +51,8 @@
     [buffer setLimit: bytesRead];
 }*/
 
--(void) send:(SCSteamPacket*) dataPacket {
+- (void)send:(SCSteamPacket *)dataPacket
+{
     NSData* bytes = [dataPacket getData];
     [channel write:[SCByteBuffer wrap:bytes]];
 }

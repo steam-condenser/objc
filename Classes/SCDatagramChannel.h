@@ -7,9 +7,6 @@
 
 #import "SCSelectableChannel.h"
 
-
-@interface SCDatagramChannel : SCSelectableChannel {
-
-}
+@interface SCDatagramChannel : SCSelectableChannel
 
 @end

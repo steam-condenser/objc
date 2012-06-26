@@ -8,27 +8,26 @@
 #import <sys/socket.h>
 #import <Foundation/Foundation.h>
 
-
 @interface SCSocket : NSObject {
 @protected
-    bool isBlocking;
-    NSString* readBuffer;
-    NSHost* remoteHost;
-    int remotePort;
-    int fdsocket;
+    BOOL       isBlocking;
+    NSString  *readBuffer;
+    NSHost    *remoteHost;
+    uint16_t   remotePort;
+    NSInteger  fdsocket;
 }
 
--(void) close;
--(char) getByte;
--(float) getFloat;
--(long) getLong;
--(short) getShort;
--(NSString*) getString;
--(NSData*) recv: (int) length;
--(bool) select;
--(bool) select: (int) timeout;
--(int) send: (NSData*) data;
--(void) setBlock: (bool) doBlock;
--(int) socket;
+- (void)close;
+- (int8_t)getByte;
+- (float)getFloat;
+- (int32_t)getLong;
+- (int16_t)getShort;
+- (NSString *)getString;
+- (NSData *)recv:(NSUInteger)length;
+- (BOOL)select;
+- (BOOL)select:(NSUInteger)timeout;
+- (NSUInteger)send:(NSData *)data;
+- (void)setBlock:(BOOL)doBlock;
+- (NSUInteger)socket;
 
 @end

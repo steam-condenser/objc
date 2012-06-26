@@ -7,12 +7,11 @@
 
 #import "SCSocket.h"
 
-
 @interface SCSelectableChannel : NSObject {
 @protected
-    SCSocket* socket;
+    SCSocket *socket;
 }
 
--(SCSocket*) socket;
+- (SCSocket *)socket;
 
 @end

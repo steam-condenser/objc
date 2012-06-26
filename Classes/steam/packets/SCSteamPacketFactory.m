@@ -7,7 +7,6 @@
 
 #import "SCSteamPacketFactory.h"
 
-
 @implementation SCSteamPacketFactory
 
 @end

@@ -7,11 +7,14 @@
 
 #import "SCRCONAuthResponse.h"
 
-
 @implementation SCRCONAuthResponse
 
--(id) initWithRequestId:(long) requestId {
-    self = [super initWithRequestId:requestId andHeader:SERVERDATA_AUTH_RESPONSE andData:[NSData data]];
+- (id)initWithRequestId:(uint32_t)requestId
+{
+    self = [super initWithRequestId:requestId
+                          andHeader:SERVERDATA_AUTH_RESPONSE
+                            andData:[NSData data]];
+
     return self;
 }
 

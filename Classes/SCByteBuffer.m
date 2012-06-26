@@ -8,40 +8,47 @@
 #import "SCBufferUnderflowException.h"
 #import "SCByteBuffer.h"
 
-
 @implementation SCByteBuffer
 
-+(SCByteBuffer*) allocate:(int) length {
++ (SCByteBuffer *)allocate:(NSUInteger)length
+{
     return [[SCByteBuffer alloc] initWithByteArray:[NSMutableData dataWithLength:length]];
 }
 
-+(SCByteBuffer*) wrap:(NSData*) aByteArray {
++ (SCByteBuffer *)wrap:(NSData *)aByteArray
+{
     return [[SCByteBuffer alloc] initWithByteArray:aByteArray];
 }
             
--(id) initWithByteArray:(NSData*) aByteArray {        
+- (id)initWithByteArray:(NSData *)aByteArray
+{
+    self = [super init];
+
     byteArray = [NSMutableData dataWithData:aByteArray];
     capacity = [byteArray length];
     limit = capacity;
     position = 0;
     mark = -1;
-    
+
     return self;
 }
 
--(NSMutableData*) array {
+- (NSMutableData *)array
+{
     return byteArray;
 }
     
--(SCByteBuffer*) clear {
+- (SCByteBuffer *)clear
+{
     limit = capacity;
     position = 0;
     mark = -1;
-    
+
     return self;
 }
 
--(SCByteBuffer*) flip {
+- (SCByteBuffer*) flip
+{
     limit = position;
     position = 0;
     mark = -1;
@@ -49,101 +56,113 @@
     return self;
 }
 
--(NSData*) get {
+- (NSData *)get
+{
     return [self get:0];
 }
 
--(NSData*) get:(int) length
+-(NSData *)get:(NSUInteger)length
 {
-    if(length == 0)
-    {
+    if (length == 0) {
         length = limit - position;
-    }
-    else if(length > [self remaining])
-    {
+    } else if (length > [self remaining]) {
         @throw [[SCBufferUnderflowException alloc] init];
     }
     
-    NSRange range = {position, length};
-    NSData* data = [byteArray subdataWithRange:range];
+    NSRange range = { position, length };
+    NSData *data = [byteArray subdataWithRange:range];
     position += length;
-    
+
     return data;
 }
 
--(char) getByte {
-    unsigned char bytes[1];
+- (int8_t)getByte
+{
+    int8_t bytes[1];
     [[self get:1] getBytes:bytes length:1];
+
     return bytes[0];
 }
 
--(float) getFloat {
-    unsigned char bytes[4];
+- (float) getFloat
+{
+    int8_t bytes[4];
     [[self get:4] getBytes:bytes length:4];
-    return *((float*) bytes);
+
+    return *((float *)bytes);
 }
 
--(long) getLong {
-    unsigned char bytes[4];
+- (int32_t) getLong {
+    int8_t bytes[4];
     [[self get:4] getBytes:bytes length:4];
-    return *((long*) bytes);
+
+    return *((int32_t *)bytes);
 }
 
--(short) getShort {
-    unsigned char bytes[2];
+- (int16_t) getShort
+{
+    int8_t bytes[2];
     [[self get:2] getBytes:bytes length:2];
-    return *((short*) bytes);
+
+    return *((int16_t *)bytes);
 }
 
--(NSString*) getString {
-    NSRange searchRange = {position, limit - position};
-    NSRange zeroByteRange = [[[NSString alloc] initWithData:byteArray encoding:NSASCIIStringEncoding] rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"\0"] options:NSLiteralSearch range:searchRange];
-    if(zeroByteRange.location == NSNotFound)
-    {
+-(NSString*) getString
+{
+    NSRange searchRange = { position, limit - position };
+    NSRange zeroByteRange = [[[NSString alloc] initWithData:byteArray
+                                                   encoding:NSASCIIStringEncoding] rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"\0"] options:NSLiteralSearch range:searchRange];
+    if (zeroByteRange.location == NSNotFound) {
         return @"";
-    }
-    else
-    {
+    } else {
         NSRange stringRange = {position, zeroByteRange.location - position};
-        NSString* dataString = [[NSString alloc] initWithData:[byteArray subdataWithRange:stringRange] encoding:NSASCIIStringEncoding];
+        NSString* dataString = [[NSString alloc] initWithData:[byteArray subdataWithRange:stringRange]
+                                                     encoding:NSASCIIStringEncoding];
         position += stringRange.length + 1;
         return dataString;
     }
 }
 
--(int) getLength {
+- (NSUInteger)getLength
+{
     return [byteArray length];
 }
 
--(int) limit {
+- (NSUInteger)limit
+{
     return limit;
 }
 
--(int) position {
+- (NSUInteger)position
+{
     return position;
 }
 
--(int) remaining {
+- (NSUInteger)remaining
+{
     return limit - position;
 }
 
--(SCByteBuffer*) rewind {
+- (SCByteBuffer *)rewind
+{
     position = 0;
     mark = -1;
-    
+
     return self;
 }
 
--(void) setLimit:(int) newLimit {
+- (void)setLimit:(NSUInteger)newLimit
+{
     limit = newLimit;
 }
 
--(SCByteBuffer*) put:(NSData*) sourceByteArray {
-    int newPosition = MIN([sourceByteArray length], [self remaining]);
-    NSRange range = {position, newPosition};
+- (SCByteBuffer *)put:(NSData *)sourceByteArray
+{
+    NSUInteger newPosition = MIN([sourceByteArray length], [self remaining]);
+    NSRange range = { position, newPosition };
     [byteArray replaceBytesInRange:range withBytes:[sourceByteArray bytes]];
     position = newPosition;
-    
+
     return self;
 }
         

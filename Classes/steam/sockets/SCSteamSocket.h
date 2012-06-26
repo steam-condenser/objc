@@ -8,18 +8,17 @@
 #import "SCByteBuffer.h"
 #import "SCSelectableChannel.h"
 
-
 @interface SCSteamSocket : NSObject {
 @protected
-    SCByteBuffer* buffer;
-    SCSelectableChannel* channel;
-    NSHost* remoteHost;
-    int remotePort;
+    SCByteBuffer *buffer;
+    SCSelectableChannel *channel;
+    NSHost *remoteHost;
+    uint16_t remotePort;
 }
 
--(id) initWithHost:(NSHost*) host andPort:(int) portNumber;
--(SCSteamPacket*) getReply;
+- (id)initWithHost:(NSHost *)host andPort:(uint16_t)portNumber;
+- (SCSteamPacket *)getReply;
 //-(void) receivePacket:(int) length;
--(void) send:(SCSteamPacket*) dataPacket;
+- (void)send:(SCSteamPacket *)dataPacket;
 
 @end

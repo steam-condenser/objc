@@ -5,26 +5,22 @@
  * Copyright (c) 2009-2012, Sebastian Staudt
  */
 
-#import <Foundation/Foundation.h>
-
-#define REQUEST_CHALLENGE 0;
-#define REQUEST_INFO 1;
-#define REQUEST_PLAYER 2;
+#define REQUEST_CHALLENGE 0
+#define REQUEST_INFO 1
+#define REQUEST_PLAYER 2
 #define REQUEST_RULES 3
 
-
 @interface SCGameServer : NSObject {
-
 @protected
-    NSHashTable* infoHash;
-    int          ping;
-    NSArray*     playerArray;
-    NSHost*      serverHost;
-    int          serverPort;
-    NSHashTable* rulesHash;
+    NSDictionary   *infoHash;
+    uint16_t        ping;
+    NSArray        *playerArray;
+    NSHost         *serverHost;
+    uint16_t        serverPort;
+    NSDictionary   *rulesHash;
 }
 
--(id) initWithHost:(NSHost*) host andPort:(int) portNumber;
+- (id)initWithHost:(NSHost *)host andPort:(uint16_t)portNumber;
 
 /*-(void)getReply;
 -(void)initialize;

@@ -7,11 +7,12 @@
 
 #import "SCBufferUnderflowException.h"
 
-
 @implementation SCBufferUnderflowException
 
--(id) init {
+- (id)init
+{
     self = [super initWithMessage:@"Buffer underflow."];
+
     return self;
 }
 

@@ -7,11 +7,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@interface SCException : NSException
 
-@interface SCException : NSException {
-
-}
-
--(id) initWithMessage: (NSString*) message;
+- (id)initWithMessage:(NSString*)message;
 
 @end

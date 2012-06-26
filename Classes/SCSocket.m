@@ -12,102 +12,114 @@
 #import "SCSocket.h"
 #import "SCException.h"
 
-
 @implementation SCSocket
 
--(void) close {
+- (void)close
+{
     close(fdsocket);
 }
 
--(char) getByte {
+- (int8_t)getByte
+{
     char buffer;
     recv(fdsocket, &buffer, 1, 0);
+
     return buffer;
 }
 
--(float) getFloat {
+- (float)getFloat
+{
     char buffer[4];
     recv(fdsocket, buffer, 4, 0);
-    return *((float*) buffer);
+
+    return *((float *)buffer);
 }
 
--(long) getLong {
+- (int32_t)getLong
+{
     char buffer[4];
     recv(fdsocket, buffer, 4, 0);
-    return *((long*) buffer);
+
+    return *((int32_t*)buffer);
 }
 
--(short) getShort
+- (int16_t)getShort
 {
     char buffer[2];
     recv(fdsocket, buffer, 2, 0);
-    return *((short*) buffer);
+
+    return *((int16_t *)buffer);
 }
 
--(NSString*) getString
+- (NSString *)getString
 {
     char ch;
     NSMutableString* buffer = [[NSMutableString alloc] init];
-    
+
     do {
         read(fdsocket, &ch, 1);
         [buffer appendFormat:@"%c", ch];
     } while(ch != '\0');
-    
+
     return buffer;
 }
 
--(NSData*) recv: (int) length {
+- (NSData *)recv:(NSUInteger)length
+{
     char data[length];
-    
+
     int bytesRead = recv(fdsocket, data, length, 0);
     if(bytesRead == -1) {
         @throw [[SCException alloc] initWithMessage:[NSString stringWithFormat:@"Could not read from socket: %s", strerror(errno)]];
     }
-    
+
     return [NSData dataWithBytes:data length:bytesRead];
 }
 
--(bool) select {
+- (BOOL)select
+{
     return [self select:0];
 }
 
--(bool) select:(int) timeout {
+- (BOOL)select:(NSUInteger)timeout
+{
     fd_set read;
-    int selectResult;
+    NSInteger selectResult;
     struct timeval timeoutVal;
     timeoutVal.tv_sec = timeout;
     timeoutVal.tv_usec = 0;
-    
+
     FD_ZERO(&read);
     FD_SET(fdsocket, &read);
     selectResult = select(fdsocket + 1, &read, nil, nil, &timeoutVal);
-    if(selectResult == -1) {
+    if (selectResult == -1) {
         @throw [[SCException alloc] initWithMessage:[NSString stringWithFormat:@"select() failed: %@", strerror(errno)]];
     }
- 
+
     return (selectResult > 0);
 }
 
--(int) send:(NSData*) data {
+- (NSUInteger)send:(NSData *)data
+{
     NSUInteger length = [data length];
     uint8_t bytes[length];
     [data getBytes:bytes length:length];
-    
+
     int sendResult = write(fdsocket, bytes, length);
-    
+
     if(sendResult == -1) {
         @throw [[SCException alloc] initWithMessage:[NSString stringWithFormat:@"Send failed: %s", strerror(errno)]];
     }
-    
+
     return sendResult;
 }
 
--(void) setBlock: (bool) doBlock {
+-(void) setBlock: (BOOL) doBlock {
     isBlocking = doBlock;
 }
 
--(int) socket {
+- (NSUInteger)socket
+{
     return fdsocket;
 }
 

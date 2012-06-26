@@ -15,9 +15,9 @@
 //    SourceSocket* socket;
 }
 
--(id) initWithHost:(NSHost*) host;
--(id) initWithHost:(NSHost*) host andPort:(int) portNumber;
--(bool) rconAuth:(NSString*) password;
--(NSString*) rconExec:(NSString*) command;
+- (id)initWithHost:(NSHost *)host;
+- (id)initWithHost:(NSHost *)host andPort:(uint16_t)portNumber;
+- (BOOL)rconAuth:(NSString *)password;
+- (NSString *)rconExec:(NSString *)command;
 
 @end

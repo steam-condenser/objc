@@ -7,11 +7,12 @@
 
 #import "SCTimeoutException.h"
 
-
 @implementation SCTimeoutException
 
--(id) init {
+- (id)init
+{
     self = [super initWithMessage:@"Operation timed out."];
+
     return self;
 }
 

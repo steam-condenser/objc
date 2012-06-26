@@ -7,9 +7,6 @@
 
 #import "SCException.h"
 
-
-@interface SCPacketFormatException : SCException {
-
-}
+@interface SCPacketFormatException : SCException
 
 @end

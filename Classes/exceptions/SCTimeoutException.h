@@ -7,9 +7,6 @@
 
 #import "SCException.h"
 
-
-@interface SCTimeoutException : SCException {
-
-}
+@interface SCTimeoutException : SCException
 
 @end
